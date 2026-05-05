@@ -1,19 +1,14 @@
 import { registerRoot, Composition, AbsoluteFill, Sequence, useCurrentFrame, useVideoConfig, Audio, staticFile, Img } from 'remotion';
 import { interpolate } from 'remotion';
 
-// المشهد الأول: الطفولة في الكوفة (صور 1.png إلى 4.png)
 const Scene1: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const durationPerImage = fps * 3; // 3 ثوانٍ لكل صورة
-  const imageIndex = Math.min(Math.floor(frame / durationPerImage), 3); // 0,1,2,3
+  const durationPerImage = fps * 3;
+  const imageIndex = Math.min(Math.floor(frame / durationPerImage), 3);
   const imageFile = `${imageIndex + 1}.png`;
-  
-  // تأثير الزووم البطيء
   const scale = interpolate(frame % durationPerImage, [0, durationPerImage], [1, 1.05]);
-  // تأثير التلاشي عند بداية كل صورة
   const opacity = interpolate(frame % durationPerImage, [0, 15], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-  
   return (
     <AbsoluteFill style={{ backgroundColor: 'black' }}>
       <Img src={staticFile(`images/${imageFile}`)} style={{
@@ -29,9 +24,7 @@ const Scene1: React.FC = () => {
         background: 'linear-gradient(0deg, rgba(0,0,0,0.5), rgba(0,0,0,0.2))',
       }}>
         <h1 style={{ color: '#ffd966', fontSize: 70, fontFamily: 'Cairo, sans-serif', textAlign: 'center', textShadow: '2px 2px 5px black' }}>
-          {frame < durationPerImage * 1 ? 'الكوفة...' :
-           frame < durationPerImage * 2 ? 'طفل استثنائي' :
-           frame < durationPerImage * 3 ? 'نظرة تخترق الجدران' : 'المتنبي'}
+          {frame < durationPerImage * 1 ? 'الكوفة...' : frame < durationPerImage * 2 ? 'طفل استثنائي' : frame < durationPerImage * 3 ? 'نظرة تخترق الجدران' : 'المتنبي'}
         </h1>
       </AbsoluteFill>
       <Audio src={staticFile('audio/scene1.mp3')} />
@@ -39,17 +32,14 @@ const Scene1: React.FC = () => {
   );
 };
 
-// المشهد الثاني: دعوى النبوة (صور 5.png إلى 10.png)
 const Scene2: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const durationPerImage = fps * 4; // 4 ثوانٍ لكل صورة
-  const imageIndex = Math.min(Math.floor(frame / durationPerImage), 5); // 0..5
+  const durationPerImage = fps * 4;
+  const imageIndex = Math.min(Math.floor(frame / durationPerImage), 5);
   const imageFile = `${imageIndex + 5}.png`;
-  
   const scale = interpolate(frame % durationPerImage, [0, durationPerImage], [1, 1.08]);
   const brightness = interpolate(frame % durationPerImage, [0, durationPerImage], [1, 1.15]);
-  
   return (
     <AbsoluteFill>
       <Img src={staticFile(`images/${imageFile}`)} style={{
@@ -74,12 +64,10 @@ const Scene2: React.FC = () => {
   );
 };
 
-// الفيلم الكامل
 const AlMutanabbiFilm: React.FC = () => {
   const { fps } = useVideoConfig();
-  const scene1Duration = fps * 3 * 4;  // 12 ثانية
-  const scene2Duration = fps * 4 * 6;  // 24 ثانية
-  
+  const scene1Duration = fps * 3 * 4;
+  const scene2Duration = fps * 4 * 6;
   return (
     <>
       <Sequence from={0} durationInFrames={scene1Duration}>
@@ -96,7 +84,7 @@ registerRoot(() => (
   <Composition
     id="MyComp"
     component={AlMutanabbiFilm}
-    durationInFrames={ (3*4 + 4*6) * 30 }  // 36 ثانية تقريباً
+    durationInFrames={ (3*4 + 4*6) * 30 }
     fps={30}
     width={1080}
     height={1920}
