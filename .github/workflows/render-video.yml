@@ -1,0 +1,35 @@
+name: Render Video
+on:
+  workflow_dispatch:
+    inputs:
+      scene:
+        description: 'المشهد المراد رندرته'
+        required: true
+        default: 'scene1'
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Render Scene
+        run: |
+          if [ "${{ github.event.inputs.scene }}" == "scene1" ]; then
+            npx remotion render src/index.ts out/almutanabbi_scene1.mp4
+          fi
+
+      - name: Upload Video
+        uses: actions/upload-artifact@v3
+        with:
+          name: almutanabbi-video
+          path: out/almutanabbi_scene1.mp4
