@@ -10,10 +10,10 @@ jobs:
       actions: write
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        uses: actions/checkout@900f2210b1d28bbbd0bd22d17926b9e224e8f231
 
       - name: Setup Node
-        uses: actions/setup-node@1d0ff469b7ecceb3c115ace095d3a9ebc52d3b6d
+        uses: actions/setup-node@670825a89dc0abd596e7a3abd0f5e3f6e5faf37c
         with:
           node-version: 20
 
@@ -24,7 +24,7 @@ jobs:
         run: npx remotion render src/remotion/index.ts out/video.mp4
 
       - name: Upload
-        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: almutanabbi-video
           path: out/video.mp4
