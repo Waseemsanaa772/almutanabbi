@@ -5,12 +5,15 @@ on:
 jobs:
   render:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
     steps:
       - name: Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@v4
 
       - name: Setup Node
-        uses: actions/setup-node@60edb5dd545a775178f525247833781747dbccbd
+        uses: actions/setup-node@v4
         with:
           node-version: 20
 
@@ -21,7 +24,7 @@ jobs:
         run: npx remotion render src/remotion/index.ts out/video.mp4
 
       - name: Upload
-        uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32
+        uses: actions/upload-artifact@v4
         with:
           name: almutanabbi-video
           path: out/video.mp4
