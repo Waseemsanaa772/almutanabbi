@@ -25,8 +25,8 @@ jobs:
       - name: Render Scene
         run: |
           if [ "${{ github.event.inputs.scene }}" == "scene1" ]; then
-       run: npx remotion render almutanabbi out/almutanabbi_scene1.mp4
-
+            npx remotion render almutanabbi out/almutanabbi_scene1.mp4
+          fi
 
       - name: Upload Video
         uses: actions/upload-artifact@v3
