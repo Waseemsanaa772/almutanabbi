@@ -1,17 +1,10 @@
 name: Render Video
 on:
   workflow_dispatch:
-    inputs:
-      scene:
-        description: 'المشهد المراد رندرته'
-        required: true
-        default: 'scene1'
 
 jobs:
   render:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,11 +17,11 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Render Scene
-        run: npx remotion render src/remotion/index.ts out/almutanabbi_scene1.mp4 || npx remotion render src/index.ts out/almutanabbi_scene1.mp4
+      - name: Render
+        run: npx remotion render src/remotion/index.ts out/video.mp4
 
-      - name: Upload Video
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
           name: almutanabbi-video
-          path: out/almutanabbi_scene1.mp4
+          path: out/video.mp4
