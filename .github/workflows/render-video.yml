@@ -10,26 +10,25 @@ on:
 jobs:
   render:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
+        uses: actions/checkout@v4
 
       - name: Setup Node
-        uses: actions/setup-node@f43a0e5ff2bd294095638e18286ca9a3d1956744
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Install Dependencies
         run: npm install
 
       - name: Render Scene
-        run: |
-          if [ "${{ github.event.inputs.scene }}" == "scene1" ]; then
-            npx remotion render almutanabbi out/almutanabbi_scene1.mp4
-          fi
+        run: npx remotion render src/remotion/index.ts out/almutanabbi_scene1.mp4 || npx remotion render src/index.ts out/almutanabbi_scene1.mp4
 
       - name: Upload Video
-        uses: actions/upload-artifact@f43a0e5ff2bd294095638e18286ca9a3d1956744
+        uses: actions/upload-artifact@v4
         with:
           name: almutanabbi-video
           path: out/almutanabbi_scene1.mp4
